@@ -19,7 +19,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Configurações da API (UTILIZAR ENV FILE!)
+  // Configurações da API (NÃO ESQUECER DO ENV FILE!)
   const API_KEY = process.env.EXPO_PUBLIC_KEY; 
   const BASE_URL = process.env.EXPO_PUBLIC_URL; 
 
@@ -34,7 +34,7 @@ const fetchWeather = async () => {
     try {
 
       const cityClean = city.replace(/,\s+/g, ','); 
-      const url = `${BASE_URL}?city=${encodeURIComponent(cityClean)}&days=7&APPID=${API_KEY}`;
+      const url = `${BASE_URL}?city=${encodeURIComponent(cityClean)}&days=7&APPID=${API_KEY}`; //Endpoint utilizado
       
       console.log("URL Gerada:", url); 
 
@@ -50,7 +50,7 @@ const fetchWeather = async () => {
       const json = JSON.parse(responseText);
 
       if (!json.days) {
-        throw new Error('Formato de resposta inválido (sem "days").');
+        throw new Error('Formato de resposta inválido');
       }
 
       setForecast(json.days);
@@ -63,7 +63,6 @@ const fetchWeather = async () => {
     }
   };
 
-  // Renderização de cada item da lista
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
@@ -86,7 +85,7 @@ const fetchWeather = async () => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#448AFF" />
       
-      {/* Header / Toolbar */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>WeatherViewer</Text>
       </View>
@@ -100,7 +99,7 @@ const fetchWeather = async () => {
           onChangeText={setCity}
           placeholderTextColor="#999"
         />
-        {/* Simulação do FloatingActionButton ao lado do input ou sobreposto */}
+        {/* Simulação do FloatingActionButton ao lado do input*/}
         <TouchableOpacity style={styles.fab} onPress={fetchWeather}>
            <Text style={styles.fabIcon}>✓</Text>
         </TouchableOpacity>
